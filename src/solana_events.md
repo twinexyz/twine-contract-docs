@@ -7,8 +7,8 @@
 Emitted after deposit/ForcedWithdraw transaction is successfully added to the queue.
 
 ```rust
-pub struct MessageHandledEvent {
-    pub event: String,
+pub struct MessageTransactionEvent {
+    pub event: String,          // MessageTransaction
     pub nonce: u64,
     pub l1_pubkey: String,
     pub twine_address: String,
@@ -39,109 +39,69 @@ Example:
 }
 ```
 
-### 2. CommitedBatch
 
-Emitted after a batch is successfully committed.
-
-```rust
-let event = json!({
-  "event": "CommitedBatch",
-  "batch_number": u64,
-  "chain_id": u64,
-  "batch_hash": [u8;32],
-  "slot_number": u64
-}).to_string();
-
-msg!(&event);
-```
-
-### 3. FinalizedBatch
-
-Emitted after a batch is successfully finalized.
-
-```rust
-let event = json!({
-  "event": "FinalizedBatch",
-  "batch_number": u64,
-  "messages_handled_on_twine": u64,    
-  "chain_id": u64,
-  "batch_hash": [u8;32],
-  "slot_number": u64
-}).to_string();
-
-msg!(&event);
-```
-
-### 4. BatchCommitmentAndFinalizationSuccessful
+### 2. BatchCommitmentAndFinalizationSuccessful
 
 Emitted after a batch is committed and finalized in a single transaction directly.
 
 ```rust
-let event = json!({
-  "event": "BatchCommitmentAndFinalizationSuccessful",
-  "messages_handled_on_twine": u64,
-  "batch_number": u64,
-  "chain_id": u64,
-  "batch_hash": [u8;32],
-  "slot_number": u64
-}).to_string();
-
-msg!(&event);
+pub struct FinalizedBatchEvent {
+    pub event: String,        // BatchCommitmentAndFinalizationSuccessful
+    pub batch_number: u64,
+    pub messages_handled_on_twine: u64,
+    pub chain_id: u64,
+    pub batch_hash: [u8;32],
+    pub slot_number: u64
+}
 ```
 
 ## Tokens Gateway Events
 
-### 1. NativeRefundSuccessful
+### 1. RefundSuccessful
 
-Emitted after a successful refund of sol.
+Emitted after a successful refund.
 
 ```rust
-let event = json!({
-  "event": "NativeRefundSuccessful",
-  "nonce": u64,
-  "l1_receiver_address": String,
-  "l1_token_address": String,
-  "chain_id": u64,
-  "amount": u64,
-  "slot_number": u64 
-}).to_string();
-
-msg!(&event);
+pub struct RefundSuccessfulEvent {
+    pub event: String,          // RefundSuccessful
+    pub nonce: u64,
+    pub l1_receiver: String,
+    pub l1_token: String,
+    pub chain_id: u64,
+    pub amount: u64,
+    pub slot_number: u64,
+}
 ```
 
-### 2. NativeForcedWithdrawalSuccessful
+### 2. ForcedWithdrawalSuccessful
 
-Emitted after a forced withdrawal of native token executed successfully.
+Emitted after a forced withdrawal is executed successfully.
 
 ```rust
-let event = json!({
-  "event": "NativeForcedWithdrawalSuccessful",
-  "nonce": u64,
-  "l1_receiver_address": String,
-  "l1_token_address": String,
-  "chain_id": u64,
-  "amount": u64,
-  "slot_number": u64
-}).to_string();
-
-msg!(&event);
+pub struct ForcedWithdrawalSuccessfulEvent {
+    pub event: String,           // ForcedWithdrawalSuccessful
+    pub nonce: u64,
+    pub l1_receiver: String,
+    pub l1_token: String,
+    pub chain_id: u64,
+    pub amount: u64,
+    pub slot_number: u64,
+}
 ```
 
-### 3. SplForcedL2WithdrawExecuted
+### 3. L2WithdrawExecuted
 
-Emitted after a forced withdrawal of spl token executed successfully.
+Emitted after a l2 initiated withdrawal is executed successfully.
 
 ```rust
-let event = json!({
-  "event": "SplForcedL2WithdrawExecuted",
-  "nonce": u64,
-  "l1_token": String,
-  "l2_token": String,
-  "l1_receiver_address": String,
-  "chain_id": u64,
-  "amount": u64,
-  "slot_number": u64
-}).to_string();
-
-msg!(&event);
+pub struct L2WithdrawExecutedEvent {
+    pub event: String,           // L2WithdrawExecuted
+    pub nonce: u64,
+    pub l1_token: String,
+    pub l2_token: String,
+    pub l1_receiver: String,
+    pub chain_id: u64,
+    pub amount: u64,
+    pub slot_number: u64,
+}
 ```
